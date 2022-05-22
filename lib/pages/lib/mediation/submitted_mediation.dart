@@ -54,6 +54,7 @@ class _SubmittedMediationsScreenState extends State<SubmittedMediationsScreen> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('mediations')
+                      .orderBy('created_at', descending: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {

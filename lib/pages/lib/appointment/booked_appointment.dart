@@ -53,6 +53,7 @@ class _BookedAppointmentsState extends State<BookedAppointments> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('Booked_Appointment')
+                      .orderBy('created_at', descending: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {

@@ -57,6 +57,7 @@ class _SubmittedComplaintsScreenState extends State<SubmittedComplaintsScreen> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('complaints')
+                      .orderBy('created_at', descending: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
