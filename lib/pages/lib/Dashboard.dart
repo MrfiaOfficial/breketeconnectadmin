@@ -1,4 +1,7 @@
+import 'package:brekete_connect/pages/lib/appointment/booked_appointment.dart';
+import 'package:brekete_connect/pages/lib/complaints/submitted_complaints.dart';
 import 'package:brekete_connect/pages/lib/mediation/mediation_screen.dart';
+import 'package:brekete_connect/pages/lib/mediation/submitted_mediation.dart';
 import 'package:brekete_connect/pages/lib/social_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,7 +71,7 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 SizedBox(height: 40),
                 Container(
-                  height: height * .20,
+                  height: height * .15,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -80,7 +83,7 @@ class _DashboardState extends State<Dashboard> {
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
                             child: Text(
-                              'Home',
+                              'Admin Home',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
@@ -91,8 +94,6 @@ class _DashboardState extends State<Dashboard> {
                         ],
                       ),
                       GestureDetector(
-                        //onTap: _userLoggedIn
-                        //onTap: CurrentAppUser.currentUserData.userId != null
                         onTap: nowUser != null
                             ? () {
                                 //AppRoutes.push(context, MyProfile());
@@ -118,26 +119,7 @@ class _DashboardState extends State<Dashboard> {
                                 color: Colors.white,
                                 size: 60.0,
                               ),
-                              /* child: CurrentAppUser.currentUserData.photo == ""
-                                  ? Icon(
-                                      Icons.account_circle_rounded,
-                                      color: Colors.white,
-                                      size: 60.0,
-                                    )
-                                  : Container(
-                                      height: 50,
-                                      width: 50,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(25),
-                                        child: CachedNetworkImage(
-                                          imageUrl: CurrentAppUser
-                                              .currentUserData.photo,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ), */
                             ),
-                            // SizedBox(height: height * 0.01),
                           ],
                         ),
                       ),
@@ -145,372 +127,212 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
                 Container(
-                  height: height * .80,
+                  height: height * .85,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            //onTap: CurrentAppUser.currentUserData.userId == ""
-                            //onTap: _userLoggedIn
-                            //onTap: CurrentAppUser.currentUserData.userId != null
-                            onTap: nowUser != null
-                                ? () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Chats(),
-                                      ),
-                                    );
-                                  }
-                                : () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => UnAuthScreen(),
-                                        //builder: (context) => Chats(),
-                                      ),
-                                    );
-                                  },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.02,
-                                  ),
-                                  Image.asset(
-                                    'assets/logicon.png',
-                                    height: 60,
-                                    width: 60,
-                                  ),
-                                  Text(
-                                    '        ACCOUNT       ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.02,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      InkWell(
+                        onTap: nowUser != null
+                            ? () {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ComplaintScreen(),
-                                  ));
-                            },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.02,
+                                    builder: (context) => Chats(),
                                   ),
-                                  Image.asset(
-                                    'assets/complaint.png',
-                                    height: 40,
-                                    width: 40,
+                                );
+                              }
+                            : () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UnAuthScreen(),
+                                    //builder: (context) => Chats(),
                                   ),
-                                  Text(
-                                    '      LAY YOUR      ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    '     COMPLAINT      ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.02,
-                                  ),
-                                ],
+                                );
+                              },
+                        child: NeumorphicContainer(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: height * 0.02,
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: height * 0.04,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AppointmentScreen(),
+                              Image.asset(
+                                'assets/logicon.png',
+                                height: 60,
+                                width: 60,
+                              ),
+                              Text(
+                                '          ACCOUNT         ',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 49, 76, 190),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              );
-                            },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Image.asset(
-                                    'assets/book.png',
-                                    height: 60,
-                                    width: 60,
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.005,
-                                  ),
-                                  Text(
-                                    '             BOOK             ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    '     APPOINTMENT    ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.005,
-                                  ),
-                                ],
                               ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RadioTV()));
-                            },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Image.asset(
-                                    'assets/tv.png',
-                                    height: 70,
-                                    width: 70,
-                                  ),
-                                  Text(
-                                    '       TV/RADIO          ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.02,
-                                  ),
-                                ],
+                              SizedBox(
+                                height: height * 0.02,
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: nowUser != null
-                                ? () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                MediationScreen()));
-                                  }
-                                : () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => UnAuthScreen(),
-                                      ),
-                                    );
-                                  },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.02,
-                                  ),
-                                  Image.asset(
-                                    'assets/meditation.png',
-                                    height: 45,
-                                    width: 45,
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Text(
-                                    '      REQUEST FOR      ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'MEDITATION',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
+                      InkWell(
+                        onTap: nowUser != null
+                            ? () {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SocialScreen()));
-
-                              // Fluttertoast.showToast(
-                              //     msg: 'Feature under development!');
-                            },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.02,
+                                    builder: (context) =>
+                                        SubmittedComplaintsScreen(),
                                   ),
-                                  Image.asset(
-                                    'assets/chat.png',
-                                    height: 60,
-                                    width: 60,
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Text(
-                                    '           SOCIAL            ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          /* InkWell(
-                            onTap: () {
-                              Navigator.push(
+                                );
+                              }
+                            : () {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Homes()));
-
-                              // Fluttertoast.showToast(
-                              //     msg: 'Feature under development!');
-                            },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.02,
+                                    builder: (context) => UnAuthScreen(),
+                                    //builder: (context) => Chats(),
                                   ),
-                                  Image.asset(
-                                    'assets/shop.png',
-                                    height: 60,
-                                    width: 60,
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Text(
-                                    '           SHOP            ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                ],
+                                );
+                              },
+                        child: NeumorphicContainer(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: height * 0.04,
                               ),
-                            ),
-                          ), */
-                        ],
+                              Image.asset(
+                                'assets/complaint.png',
+                                height: 40,
+                                width: 40,
+                              ),
+                              Text(
+                                '      COMPLAINTS      ',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 49, 76, 190),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.02,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
+                      InkWell(
+                        onTap: nowUser != null
+                            ? () {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Donate1()));
-                            },
-                            child: NeumorphicContainer(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: height * 0.02,
+                                    builder: (context) => BookedAppointments(),
                                   ),
-                                  Image.asset(
-                                    'assets/donate.png',
-                                    height: 60,
-                                    width: 60,
+                                );
+                              }
+                            : () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UnAuthScreen(),
+                                    //builder: (context) => Chats(),
                                   ),
-                                  Text(
-                                    '         DONATE          ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 76, 190),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.02,
-                                  ),
-                                ],
+                                );
+                              },
+                        child: NeumorphicContainer(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: height * 0.02,
                               ),
-                            ),
+                              Image.asset(
+                                'assets/book.png',
+                                height: 60,
+                                width: 60,
+                              ),
+                              SizedBox(
+                                height: height * 0.005,
+                              ),
+                              Text(
+                                '    APPOINTMENTS    ',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 49, 76, 190),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.02,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.04,
+                      ),
+                      InkWell(
+                        onTap: nowUser != null
+                            ? () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SubmittedMediationsScreen(),
+                                  ),
+                                );
+                              }
+                            : () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UnAuthScreen(),
+                                    //builder: (context) => Chats(),
+                                  ),
+                                );
+                              },
+                        child: NeumorphicContainer(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: height * 0.03,
+                              ),
+                              Image.asset(
+                                'assets/meditation.png',
+                                height: 45,
+                                width: 45,
+                              ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
+                              Text(
+                                '      MEDITATIONS     ',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 49, 76, 190),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.02,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.04,
                       ),
                     ],
                   ),
