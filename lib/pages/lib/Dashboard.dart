@@ -34,11 +34,25 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var nowUser = FirebaseAuth.instance.currentUser;
-  bool isAdmin = false;
+  bool isAdmin;
 
   /* var isAdmin = FirebaseAuth.instance.currentUser.uid
       .toString()
       .allMatches('DdR0aEaAmvSzzHaoMi7UyNip3kA3'); */
+
+  _getAdmin() async {
+    if (nowUser.email == 'igefad1@gmail.com' ||
+        nowUser.uid == 'IrmdpY7K1SdV0Y3n67icq7JM6qI3' ||
+        nowUser.uid == 'KRcv5aKo62MClIj37yxmBjFONgH3') {
+      setState(() {
+        isAdmin = true;
+      });
+    } else {
+      setState(() {
+        isAdmin = false;
+      });
+    }
+  }
 
   //
   @override
@@ -47,24 +61,11 @@ class _DashboardState extends State<Dashboard> {
       setState(() {});
     });
     super.initState();
+    _getAdmin();
   }
 
   @override
   Widget build(BuildContext context) {
-    _getAdmin() async {
-      if (nowUser.uid == 'DdR0aEaAmvSzzHaoMi7UyNip3kA3' ||
-          nowUser.uid == 'IrmdpY7K1SdV0Y3n67icq7JM6qI3' ||
-          nowUser.uid == 'KRcv5aKo62MClIj37yxmBjFONgH3') {
-        setState(() {
-          isAdmin = true;
-        });
-      } else {
-        setState(() {
-          isAdmin = false;
-        });
-      }
-    }
-
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     String _userLoggedIn = CurrentAppUser.currentUserData.userId;
