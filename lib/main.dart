@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:brekete_connect/just_added/wrapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -60,15 +61,12 @@ class _MyAppState extends State<MyApp> {
       title: 'Brekete Connect',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-
-      //home: _isLoggedIn != null ? _isLoggedIn ? HomePage() : AuthenticatePage() : Center(child: CircularProgressIndicator()),
-
       home: SplashScreen(),
-      routes: <String, WidgetBuilder>{
+      /* routes: <String, WidgetBuilder>{
         "login": (BuildContext context) =>
             _isLoggedIn ? Dashboard() : AuthenticatePage(),
         //home: HomePage(),
-      },
+      }, */
     );
   }
 }
@@ -92,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void NavigatorPage() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => AuthenticatePage()),
+      MaterialPageRoute(builder: (context) => Wrapper()),
     );
   }
 
