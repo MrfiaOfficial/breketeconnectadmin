@@ -63,7 +63,7 @@ class _UnAuthScreenState extends State<UnAuthScreen> {
                     height: 50,
                   ),
                   Text(
-                    'YOU NEED TO LOGIN',
+                    'YOU ARE NOT AN ADMIN!',
                     style: TextStyle(
                       color: Color.fromARGB(255, 49, 76, 190),
                       fontSize: 25,
@@ -74,7 +74,7 @@ class _UnAuthScreenState extends State<UnAuthScreen> {
                     height: 50,
                   ),
                   Text(
-                    'You are trying to access a member-only page. To continue to the requested account page, you need to either login or register an account',
+                    'You are trying to access an admin-only page.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color.fromARGB(255, 49, 76, 190),
@@ -85,7 +85,7 @@ class _UnAuthScreenState extends State<UnAuthScreen> {
                   SizedBox(
                     height: 50,
                   ),
-                  Container(
+                  /* Container(
                     height: 45,
                     child: ElevatedButton(
                       child: Text("Login", style: TextStyle(fontSize: 20)),
@@ -134,7 +134,7 @@ class _UnAuthScreenState extends State<UnAuthScreen> {
                   ),
                   SizedBox(
                     height: 20.0,
-                  ),
+                  ), */
                 ],
               ),
             ),

@@ -506,7 +506,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-              SafeArea(
+              /*  SafeArea(
                 child: Container(
                     padding: EdgeInsets.fromLTRB(20, 0, 10, 5),
                     child: IconButton(
@@ -515,7 +515,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                     )),
-              ),
+              ), */
             ]),
           );
   }

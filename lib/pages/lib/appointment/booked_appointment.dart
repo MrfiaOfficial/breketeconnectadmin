@@ -53,8 +53,6 @@ class _BookedAppointmentsState extends State<BookedAppointments> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('Booked_Appointment')
-                      .where('creater_id',
-                          isEqualTo: CurrentAppUser.currentUserData.userId)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {

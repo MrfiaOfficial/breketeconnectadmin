@@ -18,9 +18,6 @@ import 'package:brekete_connect/shop/home.dart';
 import 'package:brekete_connect/shop/pages/HomePage.dart';
 import 'package:brekete_connect/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'Meditation.dart';
-import 'complaint/Conplaint.dart';
 import 'donate/Donate.dart';
 
 import 'Signin.dart';

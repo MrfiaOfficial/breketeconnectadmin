@@ -64,11 +64,11 @@ class _MyAppState extends State<MyApp> {
       //home: _isLoggedIn != null ? _isLoggedIn ? HomePage() : AuthenticatePage() : Center(child: CircularProgressIndicator()),
 
       home: SplashScreen(),
-      /* routes: <String, WidgetBuilder>{
+      routes: <String, WidgetBuilder>{
         "login": (BuildContext context) =>
             _isLoggedIn ? Dashboard() : AuthenticatePage(),
         //home: HomePage(),
-      }, */
+      },
     );
   }
 }
@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void NavigatorPage() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Dashboard()),
+      MaterialPageRoute(builder: (context) => AuthenticatePage()),
     );
   }
 

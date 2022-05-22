@@ -440,7 +440,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
               ),
-              SafeArea(
+              /* SafeArea(
                 child: Container(
                     padding: EdgeInsets.fromLTRB(20, 0, 10, 5),
                     child: IconButton(
@@ -449,7 +449,7 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                     )),
-              ),
+              ), */
             ]),
           );
   }

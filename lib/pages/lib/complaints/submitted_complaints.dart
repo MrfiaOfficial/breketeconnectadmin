@@ -12,6 +12,9 @@ class SubmittedComplaintsScreen extends StatefulWidget {
 }
 
 class _SubmittedComplaintsScreenState extends State<SubmittedComplaintsScreen> {
+  //.where('creater_id', isEqualTo: CurrentAppUser.currentUserData.userId)
+
+  //
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -54,8 +57,6 @@ class _SubmittedComplaintsScreenState extends State<SubmittedComplaintsScreen> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('complaints')
-                      .where('creater_id',
-                          isEqualTo: CurrentAppUser.currentUserData.userId)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {

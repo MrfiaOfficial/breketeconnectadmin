@@ -316,7 +316,7 @@ class _ChatsState extends State<Chats> {
                                   onTap: () {
                                     print('::::::::::::::::::::::');
                                     HelperFunctions.logout();
-                                    AppRoutes.makeFirst(context, Dashboard());
+                                    AppRoutes.makeFirst(context, SignInPage());
                                     setState(() {
                                       _userLoggedIn = null;
                                     });

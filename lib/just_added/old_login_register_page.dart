@@ -1,29 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:brekete_connect/just_added/login_register_page.dart';
-import 'package:brekete_connect/models/user.dart';
-import 'package:brekete_connect/pages/lib/complaint/submitted_comp.dart';
 import 'package:brekete_connect/utils/routes.dart';
+import 'package:brekete_connect/pages/lib/register_page.dart';
+import 'package:brekete_connect/pages/lib/signin_page.dart';
 
-import 'Conplaint.dart';
-
-class ComplaintScreen extends StatefulWidget {
-  const ComplaintScreen({Key key}) : super(key: key);
+class UnAuthScreen extends StatefulWidget {
+  const UnAuthScreen({Key key}) : super(key: key);
 
   @override
-  _ChatsState createState() => _ChatsState();
+  _UnAuthScreenState createState() => _UnAuthScreenState();
 }
 
-class _ChatsState extends State<ComplaintScreen> {
-  var nowUser = FirebaseAuth.instance.currentUser;
-
+class _UnAuthScreenState extends State<UnAuthScreen> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    String _userLoggedIn = CurrentAppUser.currentUserData.userId;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -42,7 +35,7 @@ class _ChatsState extends State<ComplaintScreen> {
               },
               child: Icon(Icons.arrow_back_ios, color: Colors.black)),
           title: Text(
-            'Complaints',
+            'Unauthorized',
             style: TextStyle(
               color: Color.fromARGB(255, 49, 76, 190),
             ),
@@ -63,14 +56,39 @@ class _ChatsState extends State<ComplaintScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  /* SizedBox(
                     height: (height - height * 0.06 - 250) * 0.5,
+                  ), */
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    'YOU NEED TO LOGIN',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 49, 76, 190),
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Text(
+                    'You are trying to access a member-only page. To continue to the requested account page, you need to either login or register an account',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 49, 76, 190),
+                      fontSize: 19,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
                   ),
                   Container(
                     height: 45,
                     child: ElevatedButton(
-                      child: Text("        NEW COMPLAINT        ",
-                          style: TextStyle(fontSize: 20)),
+                      child: Text("Login", style: TextStyle(fontSize: 20)),
                       style: ButtonStyle(
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
@@ -81,21 +99,12 @@ class _ChatsState extends State<ComplaintScreen> {
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                       side: BorderSide(color: Colors.red)))),
-                      onPressed: nowUser != null
-                          ? () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Conplaint()));
-                            }
-                          : () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => UnAuthScreen(),
-                                ),
-                              );
-                            },
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignInPage()));
+                      },
                     ),
                   ),
                   SizedBox(
@@ -104,8 +113,7 @@ class _ChatsState extends State<ComplaintScreen> {
                   Container(
                     height: 45,
                     child: ElevatedButton(
-                      child: Text("SUBMITTED COMPLAINTS",
-                          style: TextStyle(fontSize: 20)),
+                      child: Text("Register", style: TextStyle(fontSize: 20)),
                       style: ButtonStyle(
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
@@ -116,22 +124,12 @@ class _ChatsState extends State<ComplaintScreen> {
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                       side: BorderSide(color: Colors.red)))),
-                      onPressed: nowUser != null
-                          ? () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SubmittedComplaint()));
-                            }
-                          : () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => UnAuthScreen(),
-                                ),
-                              );
-                            },
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()));
+                      },
                     ),
                   ),
                   SizedBox(

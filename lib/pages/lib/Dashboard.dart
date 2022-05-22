@@ -21,9 +21,6 @@ import 'package:brekete_connect/shop/home.dart';
 import 'package:brekete_connect/shop/pages/HomePage.dart';
 import 'package:brekete_connect/utils/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'Meditation.dart';
-import 'complaint/Conplaint.dart';
 import 'donate/Donate.dart';
 
 import 'Signin.dart';
@@ -37,6 +34,13 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var nowUser = FirebaseAuth.instance.currentUser;
+  bool isAdmin = false;
+
+  /* var isAdmin = FirebaseAuth.instance.currentUser.uid
+      .toString()
+      .allMatches('DdR0aEaAmvSzzHaoMi7UyNip3kA3'); */
+
+  //
   @override
   void initState() {
     CurrentAppUser.currentUserData.getUserData().then((value) {
@@ -47,6 +51,20 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    _getAdmin() async {
+      if (nowUser.uid == 'DdR0aEaAmvSzzHaoMi7UyNip3kA3' ||
+          nowUser.uid == 'IrmdpY7K1SdV0Y3n67icq7JM6qI3' ||
+          nowUser.uid == 'KRcv5aKo62MClIj37yxmBjFONgH3') {
+        setState(() {
+          isAdmin = true;
+        });
+      } else {
+        setState(() {
+          isAdmin = false;
+        });
+      }
+    }
+
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     String _userLoggedIn = CurrentAppUser.currentUserData.userId;
@@ -183,7 +201,7 @@ class _DashboardState extends State<Dashboard> {
                         height: height * 0.04,
                       ),
                       InkWell(
-                        onTap: nowUser != null
+                        onTap: isAdmin
                             ? () {
                                 Navigator.push(
                                   context,
@@ -232,7 +250,7 @@ class _DashboardState extends State<Dashboard> {
                         height: height * 0.04,
                       ),
                       InkWell(
-                        onTap: nowUser != null
+                        onTap: isAdmin
                             ? () {
                                 Navigator.push(
                                   context,
@@ -283,7 +301,7 @@ class _DashboardState extends State<Dashboard> {
                         height: height * 0.04,
                       ),
                       InkWell(
-                        onTap: nowUser != null
+                        onTap: isAdmin
                             ? () {
                                 Navigator.push(
                                   context,
