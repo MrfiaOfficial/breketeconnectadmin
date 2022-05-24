@@ -34,6 +34,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var nowUser = FirebaseAuth.instance.currentUser;
+  String nowUserEmail =
+      FirebaseAuth.instance.currentUser.email.toString().toLowerCase();
   bool isAdmin;
 
   /* var isAdmin = FirebaseAuth.instance.currentUser.uid
@@ -41,9 +43,10 @@ class _DashboardState extends State<Dashboard> {
       .allMatches('DdR0aEaAmvSzzHaoMi7UyNip3kA3'); */
 
   _getAdmin() async {
-    if (nowUser.email == 'igefad1@gmail.com' ||
-        nowUser.uid == 'IrmdpY7K1SdV0Y3n67icq7JM6qI3' ||
-        nowUser.uid == 'KRcv5aKo62MClIj37yxmBjFONgH3') {
+    if (nowUserEmail == 'igefad1@gmail.com' ||
+        nowUserEmail == 'ordinaryahmadisah@gmail.com' ||
+        nowUserEmail == 'akeahmed2@gmail.com' ||
+        nowUserEmail == 'ordinarypresidentisah@gmail.com') {
       setState(() {
         isAdmin = true;
       });
