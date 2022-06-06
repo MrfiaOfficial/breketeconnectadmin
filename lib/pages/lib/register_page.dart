@@ -111,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
                           child: Container(
-                            height: height * 0.78,
+                            //height: height * 0.78,
                             child: Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
@@ -171,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ],
                                   ),
                                   Container(
-                                    height: height * 0.4,
+                                    height: height * 0.45,
                                     child: ListView(
                                       children: [
                                         Padding(
@@ -444,7 +444,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   /* SizedBox(
                                     height: height * 0.01,
                                   ), */
-                                  Container(
+                                  // Old RaiseButton
+                                  /* Container(
                                     height: height * 0.05,
                                     width: width * 0.4,
                                     child: RaisedButton(
@@ -460,33 +461,66 @@ class _RegisterPageState extends State<RegisterPage> {
                                         onPressed: () {
                                           _onRegister();
                                         }),
+                                  ), */
+                                  Container(
+                                    height: height * 0.05,
+                                    width: width * 0.4,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red, // background
+                                          onPrimary: Colors.white, // foreground
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0)),
+                                        ),
+                                        child: Text('Signup',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0)),
+                                        onPressed: () {
+                                          _onRegister();
+                                        }),
                                   ),
                                   SizedBox(
                                     height: height * 0.01,
                                   ),
-                                  // Text("OR",style: TextStyle(
-                                  //     color: Colors.black12,
-                                  //     fontSize: 28
-                                  // ),),
-                                  /*  SizedBox(
+                                  /* Text(
+                                    "OR",
+                                    style: TextStyle(
+                                        color: Colors.black12, fontSize: 28),
+                                  ),
+                                  SizedBox(
                                     height: height * 0.02,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                          onTap: () {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    'Login with facebook failed!');
+                                          },
+                                          child: Image.asset(
+                                            "assets/facebook.png",
+                                            height: 70,
+                                            width: 70,
+                                          )),
+                                      SizedBox(
+                                        width: 25,
+                                      ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            Fluttertoast.showToast(
+                                                msg: 'Login failed!');
+                                          },
+                                          child: Image.asset(
+                                            "images/google.png",
+                                            height: 70,
+                                            width: 70,
+                                          )),
+                                    ],
                                   ), */
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   children: [
-                                  //     GestureDetector(
-                                  //       onTap: (){
-                                  //         Fluttertoast.showToast(msg: 'Login with facebook failed!');
-                                  //       },child: Image.asset("assets/facebook.png",height: 70,width:70 ,)),
-                                  //     SizedBox(
-                                  //       width: 25,
-                                  //     ),
-                                  //     GestureDetector(
-                                  //       onTap: (){
-                                  //         Fluttertoast.showToast(msg: 'Login failed!');
-                                  //       },child: Image.asset("images/google.png",height: 70,width:70 ,)),
-                                  //   ],
-                                  // ),
                                   SizedBox(
                                     height: height * 0.03,
                                   ),
@@ -506,7 +540,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-              /*  SafeArea(
+              SafeArea(
                 child: Container(
                     padding: EdgeInsets.fromLTRB(20, 0, 10, 5),
                     child: IconButton(
@@ -515,7 +549,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                     )),
-              ), */
+              ),
             ]),
           );
   }
