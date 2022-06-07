@@ -30,17 +30,33 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
     'Disapproved',
   ];
 
+  String _formattedDate;
+  String _formattedTime;
   String _selectedStatus;
+  String _currentComment;
+  String _currentDate;
+  String _currentTime;
   String timef;
-  String vot = "Time";
+  String vot;
   final time = TextEditingController();
-  final comment = TextEditingController();
+  final _comment = TextEditingController();
 
   GlobalKey<FormState> fKey = GlobalKey<FormState>();
 
   DateTime selectedDate; // = DateTime.now();
   TimeOfDay selectedTime; // = TimeOfDay.now();
   bool isLoading;
+
+  @override
+  void initState() {
+    isLoading = false;
+    _comment.text = widget.currentComment ?? 'No comment yet';
+    _selectedStatus = widget.currentStatus ?? 'In-Review';
+    _currentDate = widget.currentDate;
+    _currentTime = widget.currentTime;
+    vot = widget.currentTime;
+    super.initState();
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -63,7 +79,13 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
+        _formattedDate = selectedDate.toLocal().toString().split(' ')[0];
       });
+    else {
+      setState(() {
+        _formattedDate = _currentDate;
+      });
+    }
   }
 
   Future<void> _selectTime(BuildContext context) async {
@@ -82,7 +104,14 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
         selectedTime = picked_s;
         timef = selectedTime.toString();
         vot = timef.substring(10, 15);
+        _formattedTime = selectedTime.toString().substring(10, 15);
       });
+    else {
+      setState(() {
+        _formattedTime = _currentTime;
+      });
+    }
+    ;
   }
 
   Future<bool> _updateAppointment() async {
@@ -90,10 +119,10 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
       Map<String, dynamic> appointmentDataMap = {
         'created_at': Timestamp.now(),
         'creater_id': CurrentAppUser.currentUserData.userId,
-        "date": selectedDate.toString(),
-        "time": vot,
+        "date": _formattedDate,
+        "time": _formattedTime,
         'status': _selectedStatus,
-        'comment': comment.text,
+        'comment': _comment.text,
       };
       await FirebaseFirestore.instance
           .collection('Booked_Appointment')
@@ -101,7 +130,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
           .update(appointmentDataMap);
 
       setState(() {
-        comment.text = "";
+        _comment.text = "";
         // name.text = "";
       });
       Fluttertoast.showToast(
@@ -114,12 +143,6 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
       Fluttertoast.showToast(msg: 'Something went wrong!');
       return false;
     }
-  }
-
-  @override
-  void initState() {
-    isLoading = false;
-    super.initState();
   }
 
   @override
@@ -182,7 +205,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        /* SizedBox(
                           height: height * 0.02,
                         ),
                         Text(
@@ -193,7 +216,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
-
+ */
                         // STATUS
                         SizedBox(
                           height: height * 0.03,
@@ -263,9 +286,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                             width: width,
                             // height: ,
                             child: Text(
-                              selectedDate == null
-                                  ? 'Select Date'
-                                  : "${selectedDate.toLocal()}".split(' ')[0],
+                              _formattedDate.toString(),
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 18,
@@ -289,7 +310,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                           child: Container(
                             width: width,
                             child: Text(
-                              "${vot}",
+                              _formattedTime.toString(),
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 18,
@@ -322,7 +343,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                                       offset: Offset(1, 1))
                                 ]),
                             child: TextFormField(
-                              controller: comment,
+                              controller: _comment,
                               // minLines: 5,
                               maxLines: 7,
                               keyboardType: TextInputType.multiline,
@@ -341,46 +362,33 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                         Container(
                           height: height * 0.06,
                           child: ElevatedButton(
-                            child: Text("UPDATE APPOINTMENT",
-                                style: TextStyle(fontSize: 20)),
-                            style: ButtonStyle(
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.red),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                        side: BorderSide(color: Colors.red)))),
-                            onPressed: () async {
-                              print("++++++++++++++++++++++++++++++++++++++++");
-                              if (fKey.currentState.validate()) {
-                                if (selectedDate != null) {
-                                  if (selectedTime != null) {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    await _updateAppointment();
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: 'Add Time!',
-                                        gravity: ToastGravity.TOP);
-                                  }
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: 'Add Date!',
-                                      gravity: ToastGravity.TOP);
+                              child: Text("UPDATE APPOINTMENT",
+                                  style: TextStyle(fontSize: 20)),
+                              style: ButtonStyle(
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.red),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          side:
+                                              BorderSide(color: Colors.red)))),
+                              onPressed: () async {
+                                if (fKey.currentState.validate()) {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  await _updateAppointment();
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
-                              }
-                            },
-                          ),
+                              }),
                         ),
 
                         SizedBox(
