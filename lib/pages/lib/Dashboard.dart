@@ -183,11 +183,19 @@ class _DashboardState extends State<Dashboard> {
                               ),
                               Image.asset(
                                 'assets/logicon.png',
-                                height: 60,
-                                width: 60,
+                                height: 50,
+                                width: 50,
                               ),
                               Text(
-                                '          ACCOUNT         ',
+                                '         FAMILY        ',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 49, 76, 190),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '         NETWORK        ',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 49, 76, 190),
                                   fontSize: 18,

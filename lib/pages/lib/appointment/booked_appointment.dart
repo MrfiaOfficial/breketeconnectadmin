@@ -1,3 +1,4 @@
+import 'package:brekete_connect/pages/lib/appointment/update_appointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -71,6 +72,9 @@ class _BookedAppointmentsState extends State<BookedAppointments> {
                             document.data() as Map<String, dynamic>;
                         return Card(
                           child: new ListTile(
+                            onTap: () {
+                              AppRoutes.push(context, UpdateAppointment());
+                            },
                             title: new Text(data['name'],
                                 style: TextStyle(color: Colors.blue)),
                             subtitle: Column(
