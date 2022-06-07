@@ -72,40 +72,64 @@ class _SubmittedMediationsScreenState extends State<SubmittedMediationsScreen> {
                             document.data() as Map<String, dynamic>;
                         return Card(
                           child: new ListTile(
-                            title: new Text(
-                              data['subject'],
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                new Text('' + data['case_type']),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                new Text(
-                                  data['firstPersonName'] +
-                                      ' vs ' +
-                                      data['secondPersonName'],
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                                /* SizedBox(
-                                  height: 5,
-                                ),
-                                new Text(
-                                  data['secondPersonName'],
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.w300),
-                                ), */
-                              ],
-                            ),
-                            /* trailing: Column(
+                              title: new Text(
+                                data['subject'],
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 3),
+                                  new Text('' + data['case_type']),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  new Text(
+                                    data['firstPersonName'] +
+                                        ' vs ' +
+                                        data['secondPersonName'],
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  new Text(
+                                    data['description'],
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  SizedBox(height: 5),
+                                  new Text(
+                                    '____________',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  SizedBox(height: 5),
+                                  new Text(
+                                    'Status: ' +
+                                        '${data['status'] ?? 'In-Review'}',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  SizedBox(height: 5),
+                                  new Text(
+                                    'Admin\'s Comment: ' +
+                                        '${data['comment'] ?? ''}',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ],
+                              ),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                color: Colors.red,
+                                onPressed: () =>
+                                    deleteMediation(mediationUid: document.id),
+                              )
+                              /* trailing: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
@@ -123,7 +147,7 @@ class _SubmittedMediationsScreenState extends State<SubmittedMediationsScreen> {
                                 ),
                               ],
                             ), */
-                          ),
+                              ),
                         );
                       }).toList(),
                     );
@@ -133,5 +157,15 @@ class _SubmittedMediationsScreenState extends State<SubmittedMediationsScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> deleteMediation({String mediationUid}) async {
+    DocumentReference documentReferencer =
+        FirebaseFirestore.instance.collection('mediations').doc(mediationUid);
+
+    await documentReferencer
+        .delete()
+        .whenComplete(() => print('Mediation deleted successfully'))
+        .catchError((e) => print(e));
   }
 }
