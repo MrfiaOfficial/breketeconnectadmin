@@ -1,3 +1,4 @@
+import 'package:brekete_connect/pages/lib/complaints/update_complaint.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -74,12 +75,23 @@ class _SubmittedComplaintsScreenState extends State<SubmittedComplaintsScreen> {
                         //String complaintUid = data['id'];
                         return Card(
                           child: new ListTile(
+                              onTap: () {
+                                AppRoutes.push(
+                                  context,
+                                  UpdateComplaint(
+                                    complaintUid: document.id,
+                                    currentComment: data['comment'] ?? '',
+                                    currentStatus:
+                                        data['status'] ?? 'In-Review',
+                                    currentCase: data['case_type'] ?? 'Family',
+                                  ),
+                                );
+                              },
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   new Text(
                                     data['created_at'].toString().split(' ')[0],
-                                    style: TextStyle(color: Colors.blue),
                                   ),
                                   new Text(
                                     data['subject'],
@@ -91,7 +103,14 @@ class _SubmittedComplaintsScreenState extends State<SubmittedComplaintsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: 3),
-                                  //new Text('' + data['phone']),
+                                  new Text('' + data['case_type']),
+                                  SizedBox(height: 5),
+                                  new Text(
+                                    data['phone'],
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
                                   SizedBox(height: 5),
                                   new Text(
                                     data['description'],
@@ -115,7 +134,6 @@ class _SubmittedComplaintsScreenState extends State<SubmittedComplaintsScreen> {
                                         fontWeight: FontWeight.w300),
                                   ),
                                   SizedBox(height: 5),
-
                                   new Text(
                                     'Admin\'s Comment: ' +
                                         '${data['comment'] ?? ''}',

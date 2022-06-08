@@ -1,3 +1,4 @@
+import 'package:brekete_connect/pages/lib/mediation/update_mediation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -72,9 +73,29 @@ class _SubmittedMediationsScreenState extends State<SubmittedMediationsScreen> {
                             document.data() as Map<String, dynamic>;
                         return Card(
                           child: new ListTile(
-                              title: new Text(
-                                data['subject'],
-                                style: TextStyle(color: Colors.blue),
+                              onTap: () {
+                                AppRoutes.push(
+                                  context,
+                                  UpdateMediation(
+                                    mediationUid: document.id,
+                                    currentComment: data['comment'] ?? '',
+                                    currentStatus:
+                                        data['status'] ?? 'In-Review',
+                                    currentCase: data['case_type'] ?? 'Family',
+                                  ),
+                                );
+                              },
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  new Text(
+                                    data['created_at'].toString().split(' ')[0],
+                                  ),
+                                  new Text(
+                                    data['subject'],
+                                    style: TextStyle(color: Colors.blue),
+                                  ),
+                                ],
                               ),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,13 +113,31 @@ class _SubmittedMediationsScreenState extends State<SubmittedMediationsScreen> {
                                         color: Colors.blue,
                                         fontWeight: FontWeight.w300),
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  new Text(
+                                    data['firstPersonPhone'] +
+                                        ' | ' +
+                                        data['secondPersonPhone'],
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  SizedBox(height: 3),
+                                  new Text(
+                                    '____________',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w300),
+                                  ),
                                   new Text(
                                     data['description'],
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.w300),
                                   ),
-                                  SizedBox(height: 5),
+                                  SizedBox(height: 3),
                                   new Text(
                                     '____________',
                                     style: TextStyle(

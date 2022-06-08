@@ -83,9 +83,6 @@ class _BookedAppointmentsState extends State<BookedAppointments> {
                                   currentTime: data['time'] ?? '',
                                 ),
                               );
-                              print(data['date'] +
-                                  data['time'] +
-                                  data['comment']);
                             },
                             title: new Text(data['name'],
                                 style: TextStyle(color: Colors.blue)),
