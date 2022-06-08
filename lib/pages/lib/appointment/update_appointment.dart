@@ -7,12 +7,14 @@ import 'package:brekete_connect/utils/routes.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class UpdateAppointment extends StatefulWidget {
+  final String appointmentUid;
   final String currentComment;
   final String currentStatus;
   final String currentDate;
   final String currentTime;
   const UpdateAppointment({
     Key key,
+    this.appointmentUid,
     this.currentComment,
     this.currentStatus,
     this.currentDate,
@@ -50,8 +52,8 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
   @override
   void initState() {
     isLoading = false;
-    _comment.text = widget.currentComment ?? 'No comment yet';
-    _selectedStatus = widget.currentStatus ?? 'In-Review';
+    _comment.text = widget.currentComment;
+    _selectedStatus = widget.currentStatus;
     _currentDate = widget.currentDate;
     _currentTime = widget.currentTime;
     vot = widget.currentTime;
@@ -59,9 +61,9 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    DateTime picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: DateTime.parse(widget.currentDate),
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
       builder: (BuildContext context, Widget child) {
@@ -80,16 +82,27 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
       setState(() {
         selectedDate = picked;
         _formattedDate = selectedDate.toLocal().toString().split(' ')[0];
+        _currentDate = _formattedDate;
       });
-    else {
+    /* else {
       setState(() {
-        _formattedDate = _currentDate;
+        _formattedDate = _currentDate.toString().substring(0, 10);
       });
-    }
+    } */
+    /* if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        _formattedDate = selectedDate.toLocal().toString().split(' ')[0];
+      });
+    if (picked = null) {
+      setState(() {
+        _formattedDate = _currentDate.toString().substring(0, 10);
+      });
+    } */
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay picked_s = await showTimePicker(
+    TimeOfDay picked_s = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
         builder: (BuildContext context, Widget child) {
@@ -105,28 +118,41 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
         timef = selectedTime.toString();
         vot = timef.substring(10, 15);
         _formattedTime = selectedTime.toString().substring(10, 15);
+        _currentTime = _formattedTime;
       });
-    else {
+    /* else {
       setState(() {
         _formattedTime = _currentTime;
       });
-    }
-    ;
+    } */
+
+    /* if (picked_s != null && picked_s != selectedTime)
+      setState(() {
+        selectedTime = picked_s;
+        timef = selectedTime.toString();
+        vot = timef.substring(10, 15);
+        _formattedTime = selectedTime.toString().substring(10, 15);
+      });
+    if (picked_s = null) {
+      setState(() {
+        _formattedTime = _currentTime;
+      });
+    } */
   }
 
-  Future<bool> _updateAppointment() async {
+  Future<bool> _updateAppointment(String appointmentUid) async {
     try {
       Map<String, dynamic> appointmentDataMap = {
         'created_at': Timestamp.now(),
         'creater_id': CurrentAppUser.currentUserData.userId,
-        "date": _formattedDate,
-        "time": _formattedTime,
+        "date": _currentDate,
+        "time": _currentTime,
         'status': _selectedStatus,
         'comment': _comment.text,
       };
       await FirebaseFirestore.instance
           .collection('Booked_Appointment')
-          .doc()
+          .doc(appointmentUid)
           .update(appointmentDataMap);
 
       setState(() {
@@ -215,8 +241,8 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                             fontSize: 14,
                             fontWeight: FontWeight.w300,
                           ),
-                        ),
- */
+                        ), */
+
                         // STATUS
                         SizedBox(
                           height: height * 0.03,
@@ -286,7 +312,9 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                             width: width,
                             // height: ,
                             child: Text(
-                              _formattedDate.toString(),
+                              selectedDate == null
+                                  ? _currentDate.toString().substring(0, 10)
+                                  : _formattedDate,
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 18,
@@ -310,7 +338,9 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                           child: Container(
                             width: width,
                             child: Text(
-                              _formattedTime.toString(),
+                              selectedTime == null
+                                  ? _currentTime
+                                  : _formattedTime,
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 18,
@@ -383,7 +413,8 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                                   setState(() {
                                     isLoading = true;
                                   });
-                                  await _updateAppointment();
+                                  await _updateAppointment(
+                                      widget.appointmentUid);
                                   setState(() {
                                     isLoading = false;
                                   });

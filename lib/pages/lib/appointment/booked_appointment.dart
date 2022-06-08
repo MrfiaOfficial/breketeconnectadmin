@@ -74,14 +74,18 @@ class _BookedAppointmentsState extends State<BookedAppointments> {
                           child: new ListTile(
                             onTap: () {
                               AppRoutes.push(
-                                  context,
-                                  UpdateAppointment(
-                                    currentComment: data['comment'] ?? '',
-                                    currentStatus:
-                                        data['status'] ?? 'In-Review',
-                                    currentDate: data['date'],
-                                    currentTime: data['time'],
-                                  ));
+                                context,
+                                UpdateAppointment(
+                                  appointmentUid: document.id,
+                                  currentComment: data['comment'] ?? '',
+                                  currentStatus: data['status'] ?? 'In-Review',
+                                  currentDate: data['date'] ?? '',
+                                  currentTime: data['time'] ?? '',
+                                ),
+                              );
+                              print(data['date'] +
+                                  data['time'] +
+                                  data['comment']);
                             },
                             title: new Text(data['name'],
                                 style: TextStyle(color: Colors.blue)),
