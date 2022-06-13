@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.savadub.breketeconnectapp">
    <application
-        android:label="bereketeconnectapp"
+        android:label="Brekete Admin"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
